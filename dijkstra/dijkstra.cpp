@@ -10,13 +10,11 @@ using namespace std;
 
 namespace Dijkstra {
 
-
-
-vector<vector<pair<int, double>>> adj_d;
-const int n_d = 100, m_d = 279;
-const int s_d = 1; // source node index
-int n_d_tmp, m_d_tmp;
-vector<double> dist_d;
+vector<vector<pair<int, double>>> adj;
+const int n = 100, m = 279;
+const int s = 1; // source node index
+int n_tmp, m_tmp;
+vector<double> dist;
 
 const double INF = numeric_limits<double>::infinity();
 
@@ -50,14 +48,14 @@ void Dijkstra(int n, int s, const vector<vector<pair<int, double>>>& adj, vector
 void load_adj_from_file(const string& filename) {
     ifstream file(filename);
     if (file.is_open()) {
-        file >> n_d_tmp >> m_d_tmp;
-        if (n_d != n_d_tmp || m_d != m_d_tmp) cerr << "The data in that file doesn't match your request!" << endl;
-        adj_d.resize(n_d + 1);
+        file >> n_tmp >> m_tmp;
+        if (n != n_tmp || m != m_tmp) cerr << "The data in that file doesn't match your request!" << endl;
+        adj.resize(n + 1);
         int u, v;
         double weight;
         while (file >> u >> v >> weight) {
-            adj_d[u].emplace_back(v, weight);
-            adj_d[v].emplace_back(u, weight);
+            adj[u].emplace_back(v, weight);
+            adj[v].emplace_back(u, weight);
         }
         file.close();
     } else {
@@ -77,15 +75,15 @@ void print_dist(int s, const vector<double>& dist) {
 #ifndef MAIN_FILE
 int main() {
     stringstream ss;
-    ss << "../results/adj_" << Dijkstra::n_d << "_" <<Dijkstra::m_d << ".txt";
+    ss << "../results/adj_" << Dijkstra::n << "_" <<Dijkstra::m << ".txt";
     string filename = ss.str();
 
     Dijkstra::load_adj_from_file(filename);
 
     // // test - Passed!
-    // cout << "n = " << n_d << ", m = " << m_d << endl;
+    // cout << "n = " << n << ", m = " << m << endl;
     // cout << fixed << setprecision(2);
-    // for (int i = 1; i <= n_d; i++) {
+    // for (int i = 1; i <= n; i++) {
     //     for (auto& edge : adj[i]) {
     //         int j = edge.first;
     //         double weight = edge.second;
@@ -95,9 +93,9 @@ int main() {
     //     }
     // }
 
-    Dijkstra::Dijkstra(Dijkstra::n_d, Dijkstra::s_d, Dijkstra::adj_d, Dijkstra::dist_d);
+    Dijkstra::Dijkstra(Dijkstra::n, Dijkstra::s, Dijkstra::adj, Dijkstra::dist);
 
-    Dijkstra::print_dist(Dijkstra::s_d, Dijkstra::dist_d);
+    Dijkstra::printist(Dijkstra::s, Dijkstra::dist);
 
     return 0;
 }
