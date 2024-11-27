@@ -7,11 +7,13 @@
 
 using namespace std;
 
-vector<vector<pair<int, double>>> adj;
-const int n = 100, m = 513;
-const int s = 1; // source node index
-int n_tmp, m_tmp;
-vector<double> dist;
+namespace BellmanFord {
+
+vector<vector<pair<int, double>>> adj_b;
+const int n_b = 100, m_b = 291;
+const int s_b = 1; // source node index
+int n_b_tmp, m_b_tmp;
+vector<double> dist_b;
 
 const double INF = numeric_limits<double>::infinity();
 
@@ -32,7 +34,7 @@ void BellmanFord(int n, int s, const vector<vector<pair<int, double>>>& adj, vec
     }
 
     // Check for negative-weight cycles
-    for (int u = 1; u <= n; ++u) {
+    for (int u = 1; u <= n_b; ++u) {
         for (const auto& edge : adj[u]) {
             int v = edge.first;
             double weight = edge.second;
@@ -47,14 +49,14 @@ void BellmanFord(int n, int s, const vector<vector<pair<int, double>>>& adj, vec
 void load_adj_from_file(const string& filename) {
     ifstream file(filename);
     if (file.is_open()) {
-        file >> n_tmp >> m_tmp;
-        if (n != n_tmp || m != m_tmp) cerr << "The data in that file doesn't match your request!" << endl;
-        adj.resize(n + 1);
+        file >> n_b_tmp >> m_b_tmp;
+        if (n_b != n_b_tmp || m_b != m_b_tmp) cerr << "The data in that file doesn't match your request!" << endl;
+        adj_b.resize(n_b + 1);
         int u, v;
         double weight;
         while (file >> u >> v >> weight) {
-            adj[u].emplace_back(v, weight);
-            adj[v].emplace_back(u, weight);
+            adj_b[u].emplace_back(v, weight);
+            adj_b[v].emplace_back(u, weight);
         }
         file.close();
     } else {
@@ -69,17 +71,22 @@ void print_dist(int s, const vector<double>& dist) {
     }
 }
 
+}
+
+#ifndef MAIN_FILE
 int main() {
     stringstream ss;
-    ss << "../results/adj_" << n << "_" << m << "_neg.txt";
+    ss << "../results/adj_" << BellmanFord::n_b << "_" << BellmanFord::m_b << "_neg.txt";
     string filename = ss.str();
 
-    load_adj_from_file(filename);
+    BellmanFord::load_adj_from_file(filename);
 
-    BellmanFord(n, s, adj, dist);
+    BellmanFord::BellmanFord(BellmanFord::n_b, BellmanFord::s_b, BellmanFord::adj_b, BellmanFord::dist_b);
 
-    print_dist(s, dist);
+    BellmanFord::print_dist(BellmanFord::s_b, BellmanFord::dist_b);
 
     return 0;
 
 }
+
+#endif

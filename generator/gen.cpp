@@ -6,10 +6,11 @@
 #include <utility>
 #include <fstream>
 #include <sstream>
+#include <cmath>
 
 using namespace std;
 
-const int n = 100;
+const int n = 10;
 int m;
 const bool neg = true;
 
@@ -62,10 +63,10 @@ int main() {
 
     for(int i = 1; i <= n; i++) {
         for(int j = i + 1; j <= n; j++) {
-            if (random_bool(1, 10)) {
-                double weight = random_weight(0.0, 10.0); // weight range [1.0, 10.0)
+            if (random_bool(static_cast<int>(10 * log2(n)), 10 * n)) {
+                double weight = random_weight(0.0, 10.0); // weight range [0.0, 10.0)
                 if (neg)
-                    weight -= 0.02;
+                    weight -= 0.03;
                 adj[i].emplace_back(j, weight);
                 adj[j].emplace_back(i, weight);
                 m++, merge(i, j);
@@ -80,7 +81,7 @@ int main() {
             int j = dist(rnd);
             double weight = random_weight(0.0, 10.0);
             if (neg)
-                weight -= 0.02;
+                weight -= 0.03;
             adj[i].emplace_back(j, weight);
             adj[j].emplace_back(i, weight);
             m++, merge(i, j);
