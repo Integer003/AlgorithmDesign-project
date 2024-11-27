@@ -9,8 +9,9 @@
 
 using namespace std;
 
-const int n = 10;
+const int n = 100;
 int m;
+const bool neg = true;
 
 // Use the adjacent table to represent the direct graph
 // each pair includes target vertex and the weight of the correspoing edge
@@ -61,8 +62,10 @@ int main() {
 
     for(int i = 1; i <= n; i++) {
         for(int j = i + 1; j <= n; j++) {
-            if (random_bool(1, 6)) {
+            if (random_bool(1, 10)) {
                 double weight = random_weight(0.0, 10.0); // weight range [1.0, 10.0)
+                if (neg)
+                    weight -= 0.02;
                 adj[i].emplace_back(j, weight);
                 adj[j].emplace_back(i, weight);
                 m++, merge(i, j);
@@ -76,6 +79,8 @@ int main() {
             std::uniform_int_distribution<int> dist(1, i - 1);
             int j = dist(rnd);
             double weight = random_weight(0.0, 10.0);
+            if (neg)
+                weight -= 0.02;
             adj[i].emplace_back(j, weight);
             adj[j].emplace_back(i, weight);
             m++, merge(i, j);
@@ -83,7 +88,10 @@ int main() {
     }
 
     stringstream ss;
-    ss << "../results/adj_" << n << "_" << m << ".txt";
+    if (!neg)
+        ss << "../results/adj_" << n << "_" << m << ".txt";
+    else
+        ss << "../results/adj_" << n << "_" << m << "_neg.txt";
     string filename = ss.str();
 
     save_adj_to_file(filename);
