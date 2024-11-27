@@ -16,8 +16,7 @@ namespace Johnson {
 const double INF = numeric_limits<double>::infinity();
 
 vector<vector<pair<int, double>>> adj;
-const int n = 100, m = 291;
-const int s = 1; // source node index
+const int n = 100, m = 279;
 int n_tmp, m_tmp;
 vector<vector<double>> all_pairs_dist(n + 1, vector<double>(n + 1, INF));
 
@@ -90,7 +89,7 @@ void print_all_pair_dist() {
 
 int main() {
     stringstream ss;
-    ss << "../results/adj_" << Johnson::n << "_" << Johnson::m << "_neg.txt";
+    ss << "../results/adj_" << Johnson::n << "_" << Johnson::m << ".txt";
     string filename = ss.str();
 
     Johnson::load_adj_from_file(filename);
