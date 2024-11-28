@@ -16,6 +16,17 @@ This project is about the study of shortest path algorithms in graphs, including
 
 Performance tests were conducted on randomly generated graphs for each algorithm, including the relationship between running time and the number of nodes, as well as comparisons with theoretical complexity. Detailed results and analysis are provided in the report.
 
+![Dijkstra's Algorithm](./results/Dijkstra_running_time_bound.png)
+
+![Bellman-Ford Algorithm](./results/Bellman-Ford_running_time_bound.png)
+
+![Johnson's Algorithm](./results/Johnson_running_time_bound.png)
+
+![Floyd-Warshall Algorithm](./results/Floyd-Warshall_running_time_bound.png)
+
+![MinSum Product Method](./results/MinSumProduct_running_time_bound.png)
+
+
 ## File Structure
 
 - `generator/`: Contains C++ code for generating random graphs.
