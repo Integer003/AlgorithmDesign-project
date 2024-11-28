@@ -4,14 +4,14 @@ from collections import defaultdict
 
 terminal_output = """
 (base) integer@tianxiangchendeMacBook-Pro minsumproduct % ./minsumproduct 
-n = 500, m = 2207
-MinSumProduct function execution time: 290176104250 nanoseconds
+n = 600, m = 2782
+MinSumProduct function execution time: 595229980083 nanoseconds
 (base) integer@tianxiangchendeMacBook-Pro minsumproduct % ./minsumproduct 
-n = 500, m = 2207
-MinSumProduct function execution time: 289908883791 nanoseconds
-(base) integer@tianxiangchendeMacBook-Pro minsumproduct % ./minsumproduct
-n = 500, m = 2207
-MinSumProduct function execution time: 291572364708 nanoseconds
+n = 600, m = 2782
+MinSumProduct function execution time: 598162789792 nanoseconds
+(base) integer@tianxiangchendeMacBook-Pro minsumproduct % ./minsumproduct 
+n = 600, m = 2782
+MinSumProduct function execution time: 597886852292 nanoseconds
 """
 
 pattern = re.compile(r'n = (\d+), m = (\d+)\n(\S+) function execution time: (\d+) nanoseconds')

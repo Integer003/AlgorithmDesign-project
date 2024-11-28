@@ -21,6 +21,7 @@ vector<double> dist;
 const double INF = numeric_limits<double>::infinity();
 
 void Dijkstra(int n, int s, const vector<vector<pair<int, double>>>& adj, vector<double>& dist) {
+    // binary heap (Fibonacci heap is more efficient, but more complex, I havn't implemented it yet)
     priority_queue<pair<double, int>, vector<pair<double, int>>, greater<pair<double, int>>> heap;
 
     dist.assign(n + 1, INF);

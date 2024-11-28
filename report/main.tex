@@ -58,7 +58,7 @@
   compare their performance. The experimental results validate the theoretical analyses and 
   demonstrate the practical efficiency of the algorithms. 
   
-  The source code is available on GitHub.
+  The source code is available on \href{https://github.com/Integer003/AlgorithmDesign-project}{Github}.
 
     \textbf{Keywords:} Graph Theory, Shortest Path
 \end{abstract}
@@ -467,8 +467,23 @@ then the time complexity is reduced to $O(n^3 \log n)$.
 
 \section{Experiment Results}
 
-I implemented all the algorithm above in C++, and tested them on a random graph with $n$ vertices and $m$ edges.
-The code is available on Github.
+I implemented all the algorithm above in C++, and tested them on a random graph with $n$ vertices and $m$ edges, where 
+\[
+  m \approx \frac{n \log_2 n}{2}
+\]
+for simplicity.
+
+The code is available on \href{https://github.com/Integer003/AlgorithmDesign-project}{Github}.
+
+Recall that the running time of the algorithms are as follows:
+\begin{itemize}
+  \item Dijkstra's Algorithm: $O(m \log n)$ (for binary heap, my code belongs to this case) or $O(m + n \log n)$ (for Fibonacci heap)
+  \item Bellman-Ford Algorithm: $O(mn)$
+  \item Johnson's Algorithm: $O(mn \log n)$ (for binary heap, my code belongs to this case) or $O(mn + n^2 \log n)$ (for Fibonacci heap)
+  \item Floyd-Warshall Algorithm: $O(n^3)$
+  \item Min-Sum Products (naive version): $O(n^4)$
+\end{itemize}
+
 
 \bibliographystyle{plain} % or any other style you prefer
 \bibliography{references} % use the .bib file

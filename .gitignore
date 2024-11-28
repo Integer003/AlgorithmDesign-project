@@ -1,3 +1,6 @@
+*.
+!*.*
+
 # latex
 *.aux
 *.bbl
@@ -25,9 +28,6 @@
 *.lol
 *.dvi
 *.xdv
-
-# pdf
-*.pdf
 
 # txt
 *.txt
