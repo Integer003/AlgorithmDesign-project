@@ -4,12 +4,14 @@
 #include <sstream>
 #include <iomanip>
 #include <limits>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 namespace MinSumProduct {
 
-const int n = 100, m = 279;
+const int n = 600, m = 2782;
 int n_tmp, m_tmp;
 vector<vector<double>> dist;
 
@@ -78,9 +80,16 @@ int main() {
 
     MinSumProduct::load_adj_from_file(filename);
 
-    auto result = MinSumProduct::MinSumProduct(MinSumProduct::dist, MinSumProduct::n);
+    cout << "n = " << MinSumProduct::n << ", m = " << MinSumProduct::m << endl;
 
-    MinSumProduct::print_dist(result);
+    auto start = high_resolution_clock::now();
+    auto result = MinSumProduct::MinSumProduct(MinSumProduct::dist, MinSumProduct::n);
+    auto end = high_resolution_clock::now();
+
+    auto duration = duration_cast<nanoseconds>(end - start);
+    cout << "MinSumProduct function execution time: " << duration.count() << " nanoseconds" << endl;
+
+    // MinSumProduct::print_dist(result);
 
     return 0;
 }

@@ -4,12 +4,14 @@
 #include <sstream>
 #include <iomanip>
 #include <limits>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 namespace FloydWarshall {
 
-const int n = 100, m = 279;
+const int n = 2000, m = 10750;
 int n_tmp, m_tmp;
 vector<vector<double>> dist;
 
@@ -70,9 +72,16 @@ int main() {
 
     FloydWarshall::load_adj_from_file(filename);
 
-    FloydWarshall::FloydWarshall(FloydWarshall::n, FloydWarshall::dist);
+    cout << "n = " << FloydWarshall::n << ", m = " << FloydWarshall::m << endl;
 
-    FloydWarshall::print_dist(FloydWarshall::dist);
+    auto start = high_resolution_clock::now();
+    FloydWarshall::FloydWarshall(FloydWarshall::n, FloydWarshall::dist);
+    auto end = high_resolution_clock::now();
+
+    auto duration = duration_cast<nanoseconds>(end - start);
+    cout << "Floyd-Warshall function execution time: " << duration.count() << " nanoseconds" << endl;
+
+    // FloydWarshall::print_dist(FloydWarshall::dist);
 
     return 0;
 }

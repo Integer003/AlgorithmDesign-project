@@ -4,13 +4,15 @@
 #include <fstream>
 #include <utility>
 #include <sstream>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 namespace BellmanFord {
 
 vector<vector<pair<int, double>>> adj;
-const int n = 100, m = 291;
+const int n = 32000, m = 237805;
 const int s = 1; // source node index
 int n_tmp, m_tmp;
 vector<double> dist;
@@ -76,15 +78,23 @@ void print_dist(int s, const vector<double>& dist) {
 #ifndef MAIN_FILE
 int main() {
     stringstream ss;
-    ss << "../results/adj_" << BellmanFord::n << "_" << BellmanFord::m << "_neg.txt";
+    // ss << "../results/adj_" << BellmanFord::n << "_" << BellmanFord::m << "_neg.txt";
+    ss << "../results/adj_" << BellmanFord::n << "_" << BellmanFord::m << ".txt";
     string filename = ss.str();
 
     BellmanFord::load_adj_from_file(filename);
 
+    cout << "n = " << BellmanFord::n << ", m = " << BellmanFord::m << endl;
+
+    auto start = high_resolution_clock::now();
     BellmanFord::BellmanFord(BellmanFord::n, BellmanFord::s, BellmanFord::adj, BellmanFord::dist);
+    auto end = high_resolution_clock::now();
 
-    BellmanFord::print_dist(BellmanFord::s, BellmanFord::dist);
+    auto duration = duration_cast<nanoseconds>(end - start);
+    cout << "Bellman-Ford function execution time: " << duration.count() << " nanoseconds" << endl;
 
+    // BellmanFord::print_dist(BellmanFord::s, BellmanFord::dist);
+    
     return 0;
 
 }

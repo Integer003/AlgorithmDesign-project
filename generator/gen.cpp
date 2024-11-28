@@ -10,9 +10,9 @@
 
 using namespace std;
 
-const int n = 10;
+const int n = 32000;
 int m;
-const bool neg = true;
+const bool neg = false;
 
 // Use the adjacent table to represent the direct graph
 // each pair includes target vertex and the weight of the correspoing edge

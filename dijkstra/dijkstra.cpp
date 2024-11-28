@@ -5,13 +5,15 @@
 #include <fstream>
 #include <utility>
 #include <sstream>
+#include <chrono>
 
 using namespace std;
+using namespace std::chrono;
 
 namespace Dijkstra {
 
 vector<vector<pair<int, double>>> adj;
-const int n = 100, m = 279;
+const int n = 6000, m = 37439;
 const int s = 1; // source node index
 int n_tmp, m_tmp;
 vector<double> dist;
@@ -81,7 +83,7 @@ int main() {
     Dijkstra::load_adj_from_file(filename);
 
     // // test - Passed!
-    // cout << "n = " << n << ", m = " << m << endl;
+    cout << "n = " << Dijkstra::n << ", m = " << Dijkstra::m << endl;
     // cout << fixed << setprecision(2);
     // for (int i = 1; i <= n; i++) {
     //     for (auto& edge : adj[i]) {
@@ -93,9 +95,14 @@ int main() {
     //     }
     // }
 
+    auto start = high_resolution_clock::now();
     Dijkstra::Dijkstra(Dijkstra::n, Dijkstra::s, Dijkstra::adj, Dijkstra::dist);
+    auto end = high_resolution_clock::now();
 
-    Dijkstra::printist(Dijkstra::s, Dijkstra::dist);
+    auto duration = duration_cast<nanoseconds>(end - start);
+    cout << "Dijkstra function execution time: " << duration.count() << " nanoseconds" << endl;
+
+    // Dijkstra::print_dist(Dijkstra::s, Dijkstra::dist);
 
     return 0;
 }

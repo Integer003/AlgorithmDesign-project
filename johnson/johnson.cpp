@@ -6,17 +6,19 @@
 #include <utility>
 #include <sstream>
 #include <queue>
+#include <chrono>
 #include "../bellman-ford/bellman_ford.cpp"
 #include "../dijkstra/dijkstra.cpp"
 
 using namespace std;
+using namespace std::chrono;
 
 namespace Johnson {
 
 const double INF = numeric_limits<double>::infinity();
 
 vector<vector<pair<int, double>>> adj;
-const int n = 100, m = 279;
+const int n = 6000, m = 37439;
 int n_tmp, m_tmp;
 vector<vector<double>> all_pairs_dist(n + 1, vector<double>(n + 1, INF));
 
@@ -94,9 +96,16 @@ int main() {
 
     Johnson::load_adj_from_file(filename);
 
-    Johnson::Johnson(Johnson::n, Johnson::adj);
+    cout << "n = " << Johnson::n << ", m = " << Johnson::m << endl;
 
-    Johnson::print_all_pair_dist();
+    auto start = high_resolution_clock::now();
+    Johnson::Johnson(Johnson::n, Johnson::adj);
+    auto end = high_resolution_clock::now();
+
+    auto duration = duration_cast<nanoseconds>(end - start);
+    cout << "Johnson function execution time: " << duration.count() << " nanoseconds" << endl;
+
+    // Johnson::print_all_pair_dist();
 
     return 0;
 }
