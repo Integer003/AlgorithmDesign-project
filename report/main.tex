@@ -13,6 +13,8 @@
 \usepackage{algorithmic}
 \usepackage{pgfplots}
 \usepackage{lmodern}
+\usepackage{subcaption}
+\usepackage{float}
 \pgfplotsset{compat=1.18}
 
 % Page layout
@@ -75,6 +77,49 @@ path is the sum of the weights of all the edges in the path. This paper first re
 solutions to this type of problem, then conducts a comprehensive analysis and comparison of the 
 feasibility and running time of its variant algorithms, and finally tests the theory in practice by 
 measuring the running time of the algorithm implemented in C++.
+
+\subsection{History}\
+\subsubsection{Early Developments}
+
+\textbf{Dijkstra's Algorithm (1956):} In 1956, Dutch computer scientist Edsger W. Dijkstra introduced an algorithm to solve the single-source shortest path problem for graphs with non-negative edge weights. Dijkstra's algorithm efficiently computes the shortest paths from a starting vertex to all other vertices in the graph. Its original implementation had a time complexity of \( O(V^2) \), where \( V \) is the number of vertices. Later improvements using priority queues and min-heaps reduced the complexity to \( O(E + V \log V) \) for sparse graphs, where \( E \) is the number of edges.
+
+\textbf{Bellman-Ford Algorithm (1958):} Richard Bellman and Lester Ford Jr. independently developed an algorithm capable of handling graphs with negative edge weights, provided there are no negative weight cycles. The Bellman-Ford algorithm relaxes all edges \( V-1 \) times and can detect negative cycles. Its time complexity is \( O(VE) \).
+
+\textbf{Floyd-Warshall Algorithm (1962):} In 1962, Robert Floyd, building upon previous work by Stephen Warshall, presented an algorithm for finding shortest paths between all pairs of vertices in a graph (the all-pairs shortest path problem). The Floyd-Warshall algorithm uses dynamic programming and has a time complexity of \( O(V^3) \). It can handle negative edge weights but not negative cycles.
+
+\subsubsection{Advancements in the Late 20th Century}
+
+\textbf{A* Search Algorithm (1968):} Developed by Peter Hart, Nils Nilsson, and Bertram Raphael, the A* search algorithm is a heuristic-based approach that efficiently finds the shortest path in graphs, particularly in pathfinding and spatial navigation scenarios. A* employs heuristics to guide the search process, significantly reducing computation time compared to uninformed search methods.
+
+\textbf{Johnson's Algorithm (1977):} Donald B. Johnson introduced an algorithm in 1977 to efficiently solve the all-pairs shortest path problem in sparse graphs (graphs where \( E \) is much less than \( V^2 \)). Johnson's algorithm combines the Bellman-Ford algorithm and Dijkstra's algorithm. It reweights the graph to eliminate negative weights and then runs Dijkstra's algorithm from each vertex. The overall time complexity is \( O(VE + V^2 \log V) \).
+
+\textbf{Thorup's Algorithm (1999):} In 1999, Mikkel Thorup presented a linear-time algorithm for the single-source shortest path problem in undirected graphs with positive integer weights. Thorup's algorithm achieves \( O(E) \) time complexity for such graphs by utilizing hierarchical bucketing techniques.
+
+\subsubsection{Recent Developments and Latest Progress}
+
+As of 2023, research on shortest path algorithms continues to be an active field, with advances focusing on improving computational efficiency, scalability, adaptiveness to dynamic changes, and applicability to large-scale and real-world graphs.
+
+\textbf{Parallel and Distributed Algorithms:} With the growth of massive graphs in social networks, biological data, and transportation systems, there has been significant interest in developing parallel and distributed algorithms for the shortest path problem. Modern algorithms leverage multi-core processors, GPUs, and distributed computing clusters to handle large graphs efficiently.
+
+\textbf{Approximation and Labeling Algorithms:} Approximation algorithms, such as those using reachability labels and distance oracles, provide near-instantaneous shortest path queries by preprocessing the graph. Techniques like Pruned Landmark Labeling and Hub Labeling have been developed to create compact data structures that allow faster queries at the expense of exactness.
+
+\textbf{Dynamic Graph Algorithms:} Real-world graphs often undergo frequent updates. Dynamic shortest path algorithms maintain shortest path information as edges and vertices are added or removed. Notable advancements include algorithms with polylogarithmic update times for certain classes of graphs.
+
+\textbf{Machine Learning Approaches:} Machine learning techniques have been applied to predict and approximate shortest paths. Graph Neural Networks (GNNs) can learn from graph structures and have been used to estimate shortest path lengths, particularly useful in scenarios where traditional algorithms are computationally prohibitive.
+
+\textbf{Quantum Algorithms:} While still theoretical, quantum computing has opened new avenues for shortest path problems. Quantum algorithms, such as those utilizing quantum walks, promise faster computations, but practical implementations remain a future prospect due to current technological limitations.
+
+\textbf{Algorithm Engineering and Practical Improvements:} Research has also focused on optimizing existing algorithms for better cache performance, reduced memory usage, and better utilization of modern hardware architectures. Algorithm engineering bridges the gap between theoretical algorithm design and practical implementation.
+
+\textbf{Stochastic and Probabilistic Models:} In scenarios where edge weights are uncertain or variable (e.g., travel times affected by traffic), stochastic shortest path algorithms have been developed. These algorithms find paths that optimize expected travel time or other probabilistic criteria.
+
+\textbf{Notable Recent Contributions}
+
+\textbf{Fast Exact Shortest Path Distance Queries in Networks with Arbitrary Positive Edge Weights (2020):} Researchers have proposed algorithms that provide exact shortest path distances with improved query times, suitable for applications like road networks where edge weights are positive.\ \cite{Akiba2013PL}
+
+\textbf{Dynamic Shortest Paths and Transitive Closure (2022):} Latest algorithms address the fully dynamic all-pairs shortest path problem, achieving improved update and query times, which is crucial for networks that change over time.\ \cite{Sankowski2005}
+
+\textbf{Sublinear Time Algorithms:} For massive graphs, sublinear time algorithms that provide approximate solutions without reading the entire graph have been explored. These algorithms are particularly relevant for real-time applications.\ \cite{Goldreich1998}
 
 
 \section{Single-Source Shortest Path Problem(SSSP)}
@@ -474,6 +519,7 @@ I implemented all the algorithm above in C++, and tested them on a random graph 
 for simplicity.
 
 The code is available on \href{https://github.com/Integer003/AlgorithmDesign-project}{Github}.
+All raw time measurements can also be found on this github page.
 
 Recall that the running time of the algorithms are as follows:
 \begin{itemize}
@@ -484,7 +530,109 @@ Recall that the running time of the algorithms are as follows:
   \item Min-Sum Products (naive version): $O(n^4)$
 \end{itemize}
 
+Below are the running results of different algorithms, with the number of nodes n as the 
+horizontal axis and the running time (running on my personal computer, which is a Macbook-Pro 
+equipped with an M2 chip) as the vertical axis.
 
+
+\subsection{Relationship between running time and number of nodes}\
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Dijkstra_running_time.png}
+      \caption{Dijkstra's Algorithm}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Bellman-Ford_running_time.png}
+      \caption{Bellman-Ford Algorithm}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Johnson_running_time.png}
+      \caption{Johnson's Algorithm}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Floyd-Warshall_running_time.png}
+      \caption{Floyd-Warshall Algorithm}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/MinSumProduct_running_time.png}
+      \caption{Min-Sum Products}
+  \end{subfigure}
+  \caption{Different Algorithm runtime - number of nodes relationship}
+\end{figure}
+
+\subsection{Relationship between running time and big O bounding function}\
+
+\begin{figure}[H]
+  \centering
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Dijkstra_running_time_bound.png}
+      \caption{Dijkstra's Algorithm}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Bellman-Ford_running_time_bound.png}
+      \caption{Bellman-Ford Algorithm}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Johnson_running_time_bound.png}
+      \caption{Johnson's Algorithm}
+  \end{subfigure}
+  \hfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/Floyd-Warshall_running_time_bound.png}
+      \caption{Floyd-Warshall Algorithm}
+  \end{subfigure}
+  \vfill
+  \begin{subfigure}[b]{0.45\textwidth}
+      \centering
+      \includegraphics[width=\textwidth]{../results/MinSumProduct_running_time_bound.png}
+      \caption{Min-Sum Products}
+  \end{subfigure}
+  \caption{Different Algorithm runtime - big $O$ bound relationship}
+\end{figure}
+
+\subsection{Analysis the result}\
+
+Next, we analyze the meaning and correctness of the above experimental results. Figure 1 is 
+drawn only to give an intuitive understanding of the relationship between running time and n. 
+According to the definition of big $O$ notation, 
+\[
+  f(n) = O(g(n)) \iff \exists c, n_0 \text{ s.t. } f(n) \leq c \cdot g(n) \text{ for all } n \geq n_0
+\]
+
+In Figure 2, I have labeled the horizontal axis with the theoretical running time $O$ upper bound 
+function of each algorithm (denote as $g(n)$). If there is a straight line through the origin, 
+when $n>n_0$, this line is always above the experimentally measured running time function $f(n)$; 
+Or, viewed on a logarithmic scale, this is equivalent to,
+\[
+  \log f(n) \leq \log c + \log g(n) \text{ for all } n \geq n_0
+\]
+
+i.e. there exist a line with slope $1$ and intercept $\log c$ that is always above the curve $\log f(n)$ in the figure.
+It's easy to see that Figure 2 is completely consistent with this theoretical result, and even agrees very well.
+
+Note: I use a logarithmic scale for two reasons: First, the data points are not evenly selected. If we do not use 
+a logarithmic scale, most of the points will be crowded in one corner, and a few points will occupy a large part of 
+the graph; second, in a logarithmic scale, $c$ parameter become the intercept of the line, which is easier to observe.
+(In the non logarithmic scale, $c$ parameter is the slope of the line, which is a little harder to observe.)
+
+\nocite{*}
 \bibliographystyle{plain} % or any other style you prefer
 \bibliography{references} % use the .bib file
 \end{document}
